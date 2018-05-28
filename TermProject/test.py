@@ -51,6 +51,7 @@ def SearchButtonAction():
     RenderText.configure(state='disabled')
 
 def SearchPlace():
+    flag = True
     trans_place = urllib.parse.quote_plus(CityList.get())
     key = '=u6gWf4hX%2FqPazPKbDjPWntYuufDTcONxlxtmymo%2F3VhDV92yP41s7dJYuiCKwODnvOflyT8MRLXKcmlgmTz9ww%3D%3D&numOfRows=40&pageSize=10&pageNo=1&startPage=1&sidoName='
     url = 'http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey' + key + trans_place + '&ver=1.3'
@@ -60,27 +61,21 @@ def SearchPlace():
     SubList = []
 
     for child in root.iter('item'):
-        SubList.append(child.find('dataTime').text)
-        SubList.append(child.find('stationName').text)
-        SubList.append(child.find('so2Value').text)
-        SubList.append(child.find('coValue').text)
-        SubList.append(child.find('o3Value').text)
-        SubList.append(child.find('no2Value').text)
-        print(SubList)
-        DataList.append(SubList)
-        SubList.clear()
+        p_name = child.find('stationName').text
+        if InputLabel.get() == p_name:
+            p_time = child.find('dataTime').text
+            p_so2 = child.find('so2Value').text
+            p_co = child.find('coValue').text
+            p_o3 = child.find('o3Value').text
+            p_no2 = child.find('no2Value').text
+            flag = False
+        if flag == False:
+            break
 
+    n =  '지역 : ' + p_name + '\nSo2 측정량 : ' + p_so2 + '\nCo 측정량 : ' + p_co + '\nO3 측정량 : ' + p_o3 + '\nNo2 측정량 : ' + p_no2
 
-    print(DataList)
-'''
-        RenderText.insert(INSERT, '시간 : ' + time)
-        RenderText.insert(INSERT, "\n")
-        RenderText.insert(INSERT, '지역 : ' + name + '\nSo2 측정량 : ' + so2 +
-                          '\nCo 측정량 : ' + co + '\nO3 측정량 : ' + o3 + '\nNo2 측정량 : ' + no2)
-        RenderText.insert(INSERT, "\n")
-        RenderText.insert(INSERT, '=================================================')
-        RenderText.insert(INSERT, "\n")
-'''
+    print(n)
+
 def InitRenderText():
     global RenderText
     RenderTextFrame = Frame(gui)

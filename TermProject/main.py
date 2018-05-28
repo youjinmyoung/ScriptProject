@@ -12,14 +12,14 @@ def placesearch():
     result = place + " 지역의 대기측정 값 정보입니다.\n"
     root = ElementTree.fromstring(data)
 
-    for root. in child.find('stationName'):
+    for child in root.iter('item'):
         time = child.find('dataTime').text
         name = child.find('stationName').text
         so2 = child.find('so2Value').text
         co = child.find('coValue').text
         o3 = child.find('o3Value').text
         no2 = child.find('no2Value').text
-
+        print()
 
         n = '지역 : ' + name + '\nSo2 측정량 : ' + so2 + '\nCo 측정량 : ' + co + '\nO3 측정량 : ' + o3 + '\nNo2 측정량 : ' + no2 + \
             '\n=======================================================\n'
