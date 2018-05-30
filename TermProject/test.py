@@ -68,11 +68,13 @@ def SearchPlace():
             p_co = child.find('coValue').text
             p_o3 = child.find('o3Value').text
             p_no2 = child.find('no2Value').text
+            pm10 = child.find('pm10Value').text
+            pm20 = child.find('pm20Value').text
             flag = False
         if flag == False:
             break
 
-    n =  '지역 : ' + p_name + '\nSo2 측정량 : ' + p_so2 + '\nCo 측정량 : ' + p_co + '\nO3 측정량 : ' + p_o3 + '\nNo2 측정량 : ' + p_no2
+    n =  '지역 : ' + p_name + '\nSo2 측정량 : ' + p_so2 + '\nCo 측정량 : ' + p_co + '\nO3 측정량 : ' + p_o3 + '\nNo2 측정량 : ' + p_no2 + '\n미세먼지 : ' + pm10 + '\n초 미세먼지 : ' + pm20
 
     print(n)
 
