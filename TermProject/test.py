@@ -80,6 +80,7 @@ def SearchPlace():
             p_co = child.find('coValue').text
             p_o3 = child.find('o3Value').text
             p_no2 = child.find('no2Value').text
+<<<<<<< HEAD
             RenderText.insert(INSERT, '시간 : ' + p_time)
             RenderText.insert(INSERT, "\n")
             RenderText.insert(INSERT, '지역 : ' + p_name + '\nSo2 측정량 : ' + p_so2 +
@@ -87,10 +88,21 @@ def SearchPlace():
             RenderText.insert(INSERT, "\n")
             RenderText.insert(INSERT, '=================================================')
             RenderText.insert(INSERT, "\n")
+=======
+            pm10 = child.find('pm10Value').text
+            pm20 = child.find('pm20Value').text
+>>>>>>> 328166b60d4b91f4422f4259738f9781ffd80737
             flag = False
         if flag == False:
             break
 
+<<<<<<< HEAD
+=======
+    n =  '지역 : ' + p_name + '\nSo2 측정량 : ' + p_so2 + '\nCo 측정량 : ' + p_co + '\nO3 측정량 : ' + p_o3 + '\nNo2 측정량 : ' + p_no2 + '\n미세먼지 : ' + pm10 + '\n초 미세먼지 : ' + pm20
+
+    print(n)
+
+>>>>>>> 328166b60d4b91f4422f4259738f9781ffd80737
 def InitRenderText():
     global RenderText
     RenderTextFrame = Frame(gui)

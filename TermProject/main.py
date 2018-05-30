@@ -19,9 +19,11 @@ def placesearch():
         co = child.find('coValue').text
         o3 = child.find('o3Value').text
         no2 = child.find('no2Value').text
+        pm10 = child.find('pm10Value').text
+        pm20 = child.find('pm20Value').text
         print()
 
-        n = '지역 : ' + name + '\nSo2 측정량 : ' + so2 + '\nCo 측정량 : ' + co + '\nO3 측정량 : ' + o3 + '\nNo2 측정량 : ' + no2 + \
+        n = '지역 : ' + name + '\nSo2 측정량 : ' + so2 + '\nCo 측정량 : ' + co + '\nO3 측정량 : ' + o3 + '\nNo2 측정량 : ' + no2 + '\n미세먼지 : ' + pm10 + '\n초 미세먼지 : ' + pm20 +\
             '\n=======================================================\n'
         result += n
 
