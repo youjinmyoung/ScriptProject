@@ -27,6 +27,19 @@ def InitSearchListBox():
     CityText.pack()
     CityText.place(x=40,y=70)
 
+def ShowPlaceList():
+    trans_place = urllib.parse.quote_plus(CityList.get())
+    key = '=u6gWf4hX%2FqPazPKbDjPWntYuufDTcONxlxtmymo%2F3VhDV92yP41s7dJYuiCKwODnvOflyT8MRLXKcmlgmTz9ww%3D%3D&numOfRows=40&pageSize=10&pageNo=1&startPage=1&sidoName='
+    url = 'http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey' + key + trans_place + '&ver=1.3'
+    data = urllib.request.urlopen(url).read()
+    root = ElementTree.fromstring(data)
+
+    RenderText.insert(INSERT, CityList.get() + '의 지역 목록\n')
+
+    for child in root.iter('item'):
+        p_name = child.find('stationName').text
+        RenderText.insert(INSERT, p_name + ' ')
+
 def InitInputLabel():
     global InputLabel
     SearchFont = font.Font(gui, size=15, weight='bold', family='Consolas')
@@ -46,6 +59,7 @@ def SearchButtonAction():
 
     RenderText.configure(state='normal')
     RenderText.delete(0.0, END)
+
     SearchPlace()
 
     RenderText.configure(state='disabled')
@@ -57,8 +71,6 @@ def SearchPlace():
     url = 'http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey' + key + trans_place + '&ver=1.3'
     data = urllib.request.urlopen(url).read()
     root = ElementTree.fromstring(data)
-    DataList = []
-    SubList = []
 
     for child in root.iter('item'):
         p_name = child.find('stationName').text
@@ -68,13 +80,16 @@ def SearchPlace():
             p_co = child.find('coValue').text
             p_o3 = child.find('o3Value').text
             p_no2 = child.find('no2Value').text
+            RenderText.insert(INSERT, '시간 : ' + p_time)
+            RenderText.insert(INSERT, "\n")
+            RenderText.insert(INSERT, '지역 : ' + p_name + '\nSo2 측정량 : ' + p_so2 +
+                              '\nCo 측정량 : ' + p_co + '\nO3 측정량 : ' + p_o3 + '\nNo2 측정량 : ' + p_no2)
+            RenderText.insert(INSERT, "\n")
+            RenderText.insert(INSERT, '=================================================')
+            RenderText.insert(INSERT, "\n")
             flag = False
         if flag == False:
             break
-
-    n =  '지역 : ' + p_name + '\nSo2 측정량 : ' + p_so2 + '\nCo 측정량 : ' + p_co + '\nO3 측정량 : ' + p_o3 + '\nNo2 측정량 : ' + p_no2
-
-    print(n)
 
 def InitRenderText():
     global RenderText
@@ -84,14 +99,9 @@ def InitRenderText():
     RenderText = Text(RenderTextFrame, width=50, height=27, borderwidth=12,
                       relief='ridge', yscrollcommand=RenderTextScrollbar.set)
     RenderTextScrollbar.config(command=RenderText.yview)
-
-
     RenderText.pack()
     RenderTextFrame.pack()
     RenderTextFrame.place(x=40, y=210)
-
-
-
     RenderText.configure(state='disabled')
 
 
