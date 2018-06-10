@@ -8,7 +8,7 @@ from xml.etree import ElementTree
 
 gui = Tk()
 gui.geometry("570x800+750+200")
-
+''
 def InitTopText():
     TempFont = font.Font(gui, size=20, weight='bold', family='Consolas')
     MainText = Label(gui, font=TempFont, text="[전국 시도별 대기상태 검색 App]")

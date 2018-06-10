@@ -2,7 +2,7 @@ import urllib.request
 import urllib.parse
 from xml.etree import ElementTree
 
-
+''
 def placesearch():
     place = input("지역이름을 입력하세요( 예) 서울, 인천 등) : ")
     trans_place = urllib.parse.quote_plus(place)
