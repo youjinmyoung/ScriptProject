@@ -81,11 +81,13 @@ def SearchPlace():
             p_o3 = child.find('o3Value').text
             p_no2 = child.find('no2Value').text
             pm10 = child.find('pm10Value').text
+            pm25 = child.find('pm25Value').text
 
             RenderText.insert(INSERT, '시간 : ' + p_time)
             RenderText.insert(INSERT, "\n")
             RenderText.insert(INSERT, '지역 : ' + p_name + '\nSo2 측정량 : ' + p_so2 +
-                              '\nCo 측정량 : ' + p_co + '\nO3 측정량 : ' + p_o3 + '\nNo2 측정량 : ' + p_no2 + '\n미세먼지 : ' + pm10)
+                              '\nCo 측정량 : ' + p_co + '\nO3 측정량 : ' + p_o3 + '\nNo2 측정량 : '
+                              + p_no2 + '\n미세먼지 : ' + pm10 + '\n초미세먼지 : ' + pm25)
             RenderText.insert(INSERT, "\n")
             RenderText.insert(INSERT, '=================================================')
             RenderText.insert(INSERT, "\n")
