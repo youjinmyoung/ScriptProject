@@ -1,14 +1,23 @@
 from tkinter import *
 from tkinter import font
 from tkinter import ttk
-import tkinter.messagebox
 import urllib.request
 import urllib.parse
 from xml.etree import ElementTree
+import folium                       #지도 연동
+import tkinter.messagebox
 
 gui = Tk()
 gui.geometry("570x800+750+200")
-''
+
+map_osm = folium.Map(location=[37.568477, 126.981611], zoom_start=13)
+
+folium.Marker([37.568477, 126.981611], popup='Mt. Hood Meadows').add_to(map_osm)
+
+map_osm.save('osm.html')
+
+map_osm
+
 def InitTopText():
     TempFont = font.Font(gui, size=20, weight='bold', family='Consolas')
     MainText = Label(gui, font=TempFont, text="[전국 시도별 대기상태 검색 App]")
