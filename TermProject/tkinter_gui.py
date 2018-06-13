@@ -4,12 +4,31 @@ from tkinter import ttk
 import urllib.request
 import urllib.parse
 from xml.etree import ElementTree
+<<<<<<< HEAD
+=======
+import folium                       #지도 연동
+import mimetypes
+import mysmtplib
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
+>>>>>>> e16bc8660f9ff46fa7f06ebd3ec7845959030d85
 import tkinter.messagebox
 
 gui = Tk()
 gui.geometry("570x600+750+100")
 
+<<<<<<< HEAD
 
+=======
+map_osm = folium.Map(location=[37.568477, 126.981611], zoom_start=13)
+
+folium.Marker([37.568477, 126.981611], popup='Mt. Hood Meadows').add_to(map_osm)
+
+map_osm.save('osm.html')
+
+map_osm
+
+>>>>>>> e16bc8660f9ff46fa7f06ebd3ec7845959030d85
 def InitTopText():
     TempFont = font.Font(gui, size=20, weight='bold', family='Consolas')
     MainText = Label(gui, font=TempFont, text="[실시간 대기상태 검색 App]")
@@ -128,6 +147,7 @@ def InitRenderText():
     RenderTextFrame.place(x=40, y=510)
     RenderText.configure(state='disabled')
 
+<<<<<<< HEAD
 def InitListRenderText():
     global ListRenderText
     ListRenderTextFrame = Frame(ptk)
@@ -245,6 +265,39 @@ def InitMapButton():
     P_Button = Button(gui, font=TempFont, text="지도 검색", command=AllPlaceButtonAction, width=20, height=5)
     P_Button.pack()
     P_Button.place(x=20, y=250)
+=======
+def Email():
+    # global value
+    host = "smtp.gmail.com"  # Gmail STMP 서버 주소.
+    port = "587"
+    htmlFileName = "AirInfo.html"
+
+    senderAddr = "yjm9494@gmail.com"  # 보내는 사람 email 주소.
+    recipientAddr = "wlsaud3232@naver.com"  # 받는 사람 email 주소.
+
+    msg = MIMEBase("multipart", "alternative")
+    msg['Subject'] = "대기상태 정보"
+    msg['From'] = senderAddr
+    msg['To'] = recipientAddr
+
+    # MIME 문서를 생성합니다.
+    htmlFD = open(htmlFileName, 'rb')
+    HtmlPart = MIMEText(htmlFD.read(), 'html', _charset='UTF-8')
+    htmlFD.close()
+
+    # 만들었던 mime을 MIMEBase에 첨부 시킨다.
+    msg.attach(HtmlPart)
+
+    # 메일을 발송한다.
+    s = mysmtplib.MySMTP(host, port)
+    # s.set_debuglevel(1)        # 디버깅이 필요할 경우 주석을 푼다.
+    s.ehlo()
+    s.starttls()
+    s.ehlo()
+    s.login("yjm9494@gmail.com", "wlsaud94")
+    s.sendmail(senderAddr, [recipientAddr], msg.as_string())
+    s.close()
+>>>>>>> e16bc8660f9ff46fa7f06ebd3ec7845959030d85
 
 
 InitTopText()
