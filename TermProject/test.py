@@ -5,6 +5,7 @@ import urllib.request
 import urllib.parse
 from xml.etree import ElementTree
 import tkinter.messagebox
+import folium
 
 gui = Tk()
 gui.geometry("570x600+750+100")
