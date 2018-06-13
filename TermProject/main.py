@@ -19,10 +19,20 @@ def SelectMenu(menu):
     elif menu == '2':
         detail_placesearch()
     elif menu == '3':
-        pass
+        MapSearch()
         #지도로 대기오염 정보 검색
     else:
         print("잘못된 값을 입력하셨습니다.")
+
+def MapSearch():
+    map_osm = folium.Map(location = [37.568477, 126.981611],zoom_start=13)
+    folium.Marker([37.568477, 126.981611], popup='Mt. Hood Meadows').add_to(map_osm)
+    map_osm.save('osm.html')
+
+    reader = csv.reader(open('시군구별_실시간_평균정보_조회.csv', 'r'), delimiter="," )
+
+    svg = open('')
+
 
 def detail_placesearch():
     global CityList
@@ -30,15 +40,14 @@ def detail_placesearch():
     global n
 
     placelist = []
-<<<<<<< HEAD
+
 
     CityList = ['서울', '부산', '대구', '인천', '광주', '대전', '울산', '경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주', '세종']
-=======
+
     CityList = []
     CityList = ['서울', '부산', '대구', '인천', '광주', '대전', '울산', '경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주', '세종']
 
     #CityList = [서울, 부산, 대구, 인천, 광주, 대전, 울산, 경기, 강원, 충북, 충남, 전북, 전남, 경북, 경남, 제주, 세종]
->>>>>>> 42d24212c969e51592126b988f7c12e118e8a9a6
     place = eval(input('도시를 선택하세요 : {0}'.format(CityList)))
     trans_place = urllib.parse.quote_plus(place)
     key = '=u6gWf4hX%2FqPazPKbDjPWntYuufDTcONxlxtmymo%2F3VhDV92yP41s7dJYuiCKwODnvOflyT8MRLXKcmlgmTz9ww%3D%3D&numOfRows=40&pageSize=10&pageNo=1&startPage=1&sidoName='
