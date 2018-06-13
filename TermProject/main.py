@@ -30,8 +30,15 @@ def detail_placesearch():
     global n
 
     placelist = []
+<<<<<<< HEAD
 
     CityList = ['서울', '부산', '대구', '인천', '광주', '대전', '울산', '경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주', '세종']
+=======
+    CityList = []
+    CityList = ['서울', '부산', '대구', '인천', '광주', '대전', '울산', '경기', '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주', '세종']
+
+    #CityList = [서울, 부산, 대구, 인천, 광주, 대전, 울산, 경기, 강원, 충북, 충남, 전북, 전남, 경북, 경남, 제주, 세종]
+>>>>>>> 42d24212c969e51592126b988f7c12e118e8a9a6
     place = eval(input('도시를 선택하세요 : {0}'.format(CityList)))
     trans_place = urllib.parse.quote_plus(place)
     key = '=u6gWf4hX%2FqPazPKbDjPWntYuufDTcONxlxtmymo%2F3VhDV92yP41s7dJYuiCKwODnvOflyT8MRLXKcmlgmTz9ww%3D%3D&numOfRows=40&pageSize=10&pageNo=1&startPage=1&sidoName='
