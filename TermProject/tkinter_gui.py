@@ -1,14 +1,23 @@
 from tkinter import *
 from tkinter import font
 from tkinter import ttk
-import tkinter.messagebox
 import urllib.request
 import urllib.parse
 from xml.etree import ElementTree
+import folium                       #지도 연동
+import tkinter.messagebox
 
 gui = Tk()
 gui.geometry("570x800+750+200")
-''
+
+map_osm = folium.Map(location=[37.568477, 126.981611], zoom_start=13)
+
+folium.Marker([37.568477, 126.981611], popup='Mt. Hood Meadows').add_to(map_osm)
+
+map_osm.save('osm.html')
+
+map_osm
+
 def InitTopText():
     TempFont = font.Font(gui, size=20, weight='bold', family='Consolas')
     MainText = Label(gui, font=TempFont, text="[전국 시도별 대기상태 검색 App]")
@@ -81,11 +90,13 @@ def SearchPlace():
             p_o3 = child.find('o3Value').text
             p_no2 = child.find('no2Value').text
             pm10 = child.find('pm10Value').text
+            pm25 = child.find('pm25Value').text
 
             RenderText.insert(INSERT, '시간 : ' + p_time)
             RenderText.insert(INSERT, "\n")
             RenderText.insert(INSERT, '지역 : ' + p_name + '\nSo2 측정량 : ' + p_so2 +
-                              '\nCo 측정량 : ' + p_co + '\nO3 측정량 : ' + p_o3 + '\nNo2 측정량 : ' + p_no2 + '\n미세먼지 : ' + pm10)
+                              '\nCo 측정량 : ' + p_co + '\nO3 측정량 : ' + p_o3 + '\nNo2 측정량 : '
+                              + p_no2 + '\n미세먼지 : ' + pm10 + '\n초미세먼지 : ' + pm25)
             RenderText.insert(INSERT, "\n")
             RenderText.insert(INSERT, '=================================================')
             RenderText.insert(INSERT, "\n")
