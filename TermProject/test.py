@@ -5,6 +5,11 @@ import urllib.request
 import urllib.parse
 from xml.etree import ElementTree
 import tkinter.messagebox
+<<<<<<< HEAD
+=======
+import folium
+
+>>>>>>> 4a58aa33cf359a0bb78abf96a0db10c73dee5295
 import folium
 
 gui = Tk()
