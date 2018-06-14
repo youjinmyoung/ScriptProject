@@ -5,16 +5,13 @@ import urllib.request
 import urllib.parse
 from xml.etree import ElementTree
 import tkinter.messagebox
-<<<<<<< HEAD
-=======
-import folium
 
->>>>>>> 4a58aa33cf359a0bb78abf96a0db10c73dee5295
-import folium
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 gui = Tk()
 gui.geometry("570x600+750+100")
-
 
 def InitTopText():
     TempFont = font.Font(gui, size=20, weight='bold', family='Consolas')
@@ -30,16 +27,17 @@ def InitDetailPlaceButton():
 def DetailPlaceButtonAction():
     global ptk
     ptk = Tk()
-    ptk.geometry("650x900")
+    ptk.geometry("570x900")
     TempFont = font.Font(ptk, size=20, weight='bold', family='Consolas')
     TopText = Label(ptk, font=TempFont, text="[시도별 상세 지역 검색]")
-    TopText.place(x=60)
+    TopText.place(x=80)
     InitSearchListBox()
     InitInputLabel()
     InitSearchButton()
     InitListSearchButton()
     InitRenderText()
     InitListRenderText()
+    EmailAddress()
 
 
 def InitSearchListBox():
@@ -98,6 +96,8 @@ def SearchPlace():
     data = urllib.request.urlopen(url).read()
     root = ElementTree.fromstring(data)
 
+    global p_name, p_time, p_co, p_no2, p_o3, p_so2, pm10, pm25
+
     for child in root.iter('item'):
         p_name = child.find('stationName').text
         if InputLabel.get() == p_name:
@@ -111,7 +111,7 @@ def SearchPlace():
 
             RenderText.insert(INSERT, '시간 : ' + p_time)
             RenderText.insert(INSERT, "\n")
-            RenderText.insert(INSERT, '지역 : ' + p_name + '\nSo2 측정량 : ' + p_so2 +
+            RenderText.insert(INSERT, '\n지역 : ' + p_name + '\nSo2 측정량 : ' + p_so2 +
                               '\nCo 측정량 : ' + p_co + '\nO3 측정량 : ' + p_o3 + '\nNo2 측정량 : '
                               + p_no2 + '\n미세먼지 : ' + pm10 + '\n초미세먼지 : ' + pm25)
             RenderText.insert(INSERT, "\n")
@@ -202,6 +202,8 @@ def AllSearchPlace():
     data = urllib.request.urlopen(url).read()
     root = ElementTree.fromstring(data)
 
+
+
     for child in root.iter('item'):
         p_name = child.find('stationName').text
         p_time = child.find('dataTime').text
@@ -245,12 +247,103 @@ def AllPlaceButtonAction():
     InitAllSearchListBox()
     InitAllSearchButton()
     InitAllRenderText()
+    EmailAddress2()
 
+def SendEmail():
+    text = RenderText.get("1.0", END)
+
+    gmail_user = "yjm9494@gmail.com"
+    gmail_pw = 'wlsaud94'
+
+    to_addr = emailaddress.get()
+
+    msg = MIMEMultipart('alternative')
+    msg['From'] = gmail_user
+    msg['To'] = to_addr
+    msg['Subject'] = '대기정보'  # 제목
+    msg.attach(MIMEText(text, 'plain', 'utf-8'))  # 내용 인코딩
+
+    try:
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.ehlo()
+        server.starttls()
+        server.login(gmail_user, gmail_pw)
+        server.sendmail(gmail_user, to_addr, msg.as_string())
+        server.quit()
+        print('success sent mail')
+
+    except BaseException as e:
+        print("failed send mail", str(e))
+
+def EmailAddress():
+    global emailaddress
+    addressfont = font.Font(ptk, size=10, weight='bold', family='Consolas')
+    PlaceText = Label(ptk, font=addressfont, text='보낼 이메일 주소')
+    PlaceText.place(x=40, y=820)
+    TempFont = font.Font(ptk, size=13, weight='bold', family = 'Consolas')
+    emailaddress = Entry(ptk, font = TempFont, width = 20, borderwidth = 12, relief = 'ridge')
+    emailaddress.place(x=200, y=800)
+    TempFont = font.Font(ptk, size=11, weight='bold', family='Consolas')
+    SendButton = Button(ptk, font=TempFont, text="보내기", command=SendEmail)
+    SendButton.place(x=480, y=810)
+
+def AllSendEmail():
+    text = AllRenderText.get("1.0", END)
+
+    gmail_user = "yjm9494@gmail.com"
+    gmail_pw = 'wlsaud94'
+
+    to_addr = emailaddress2.get()
+
+    msg = MIMEMultipart('alternative')
+    msg['From'] = gmail_user
+    msg['To'] = to_addr
+    msg['Subject'] = '대기정보'  # 제목
+    msg.attach(MIMEText(text, 'plain', 'utf-8'))  # 내용 인코딩
+
+    try:
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.ehlo()
+        server.starttls()
+        server.login(gmail_user, gmail_pw)
+        server.sendmail(gmail_user, to_addr, msg.as_string())
+        server.quit()
+        print('success sent mail')
+
+    except BaseException as e:
+        print("failed send mail", str(e))
+
+def EmailAddress2():
+    global emailaddress2
+    addressfont = font.Font(atk, size=10, weight='bold', family='Consolas')
+    PlaceText = Label(atk, font=addressfont, text='보낼 이메일 주소')
+    PlaceText.place(x=40, y=620)
+    TempFont = font.Font(atk, size=13, weight='bold', family = 'Consolas')
+    emailaddress2 = Entry(atk, font = TempFont, width = 20, borderwidth = 12, relief = 'ridge')
+    emailaddress2.place(x=200, y=600)
+    TempFont = font.Font(atk, size=11, weight='bold', family='Consolas')
+    SendButton = Button(atk, font=TempFont, text="보내기", command=AllSendEmail)
+    SendButton.place(x=480, y=610)
+
+#지도
 def InitMapButton():
     TempFont = font.Font(gui, size=12, weight='bold', family='Consolas')
-    P_Button = Button(gui, font=TempFont, text="지도 검색", command=AllPlaceButtonAction, width=20, height=5)
-    P_Button.pack()
-    P_Button.place(x=20, y=250)
+    M_Button = Button(gui, font=TempFont, text="지도", command=MapButtonAction, width=20, height=5)
+    M_Button.pack()
+    M_Button.place(x=20, y=250)
+
+def MapButtonAction():
+    global mtk
+    mtk = Tk()
+    mtk.geometry("500x500")
+    TempFont = font.Font(mtk, size=20, weight='bold', family='Consolas')
+    TopText = Label(mtk, font=TempFont, text="[지역별 대기오염 정보]")
+    TopText.place(x=60)
+
+    photo = PhotoImage(file="map.GIF")
+    imageLabel = Label(mtk, image=photo)
+    imageLabel.pack()
+
 
 
 

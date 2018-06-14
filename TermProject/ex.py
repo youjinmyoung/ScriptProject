@@ -1,5 +1,11 @@
-import folium
+from tkinter import *
 
-map_osm = folium.Map(location=[45.5236, -122.6750])
+def map():
+    window = Tk()
+    photo = PhotoImage(file = "map.GIF")
+    imageLabel = Label(window, image= photo)
+    imageLabel.pack()
 
-map_osm
+    window.mainloop()
+
+map()
