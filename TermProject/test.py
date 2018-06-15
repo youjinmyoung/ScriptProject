@@ -10,6 +10,8 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+import ex
+
 gui = Tk()
 gui.geometry("570x600+750+100")
 
@@ -334,17 +336,105 @@ def InitMapButton():
 
 def MapButtonAction():
     global mtk
-    mtk = Tk()
+    mtk = Toplevel(gui)
     mtk.geometry("500x500")
     TempFont = font.Font(mtk, size=20, weight='bold', family='Consolas')
     TopText = Label(mtk, font=TempFont, text="[지역별 대기오염 정보]")
     TopText.place(x=60)
 
-    photo = PhotoImage(file="map.GIF")
+    photo = PhotoImage(file="map.gif")
     imageLabel = Label(mtk, image=photo)
     imageLabel.pack()
+    imageLabel.place(x=50, y = 70)
+
+    city = ['서울', '인천', '세종', '경기', '강원', '충남', '경북', '충북',
+                         '대구', '대전', '전북', '광주', '경남', '울산', '부산', '전남', '제주']
+
+    state = []
+    color = []
+
+    for i in range(17):
+        pm10 = 0
+        trans_place = urllib.parse.quote_plus(city[i])
+        key = '=u6gWf4hX%2FqPazPKbDjPWntYuufDTcONxlxtmymo%2F3VhDV92yP41s7dJYuiCKwODnvOflyT8MRLXKcmlgmTz9ww%3D%3D&numOfRows=2&pageSize=10&pageNo=1&startPage=1&sidoName='
+        url = 'http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey' + key + trans_place + '&ver=1.3'
+        data = urllib.request.urlopen(url).read()
+        root = ElementTree.fromstring(data)
+
+        for child in root.iter('item'):
+            if child.find('pm10Value').text == '-':
+                pm10 = 0
+            else:
+                pm10 = int(child.find('pm10Value').text)
+            break
+
+        if pm10 < 30:
+            state.append("좋음")
+            color.append("blue")
+        elif pm10 < 80:
+            state.append("보통")
+            color.append("green")
+        elif pm10 < 150:
+            state.append("나쁨")
+            color.append("orange")
+        if pm10 > 150:
+            state.append("매우나쁨")
+            color.append("red")
 
 
+
+    seoul = Label(mtk, text=state[0], bg=color[0], fg="white", font="15")
+    seoul.place(x=165, y=110)
+
+    incheon = Label(mtk, text=state[1],bg=color[1],fg="white",font="15")
+    incheon.place(x=112,y=135)
+
+    saejong = Label(mtk, text=state[2],bg=color[2],fg="white",font="15")
+    saejong.place(x=184,y=203)
+
+    gyeonggi = Label(mtk, text=state[3], bg=color[3], fg="white", font="15")
+    gyeonggi.place(x=210, y=148)
+
+    gangwon = Label(mtk, text=state[4], bg=color[4], fg="white", font="15")
+    gangwon.place(x=275, y=111)
+
+    chungnam = Label(mtk, text=state[5], bg=color[5], fg="white", font="15")
+    chungnam.place(x=130, y=231)
+
+    gyengbook = Label(mtk, text=state[6], bg=color[6], fg="white", font="15")
+    gyengbook.place(x=330, y=207)
+
+    chungbuk = Label(mtk, text=state[7], bg=color[7], fg="white", font="15")
+    chungbuk.place(x=260, y=194)
+
+    daegoo = Label(mtk, text=state[8], bg=color[8], fg="white", font="15")
+    daegoo.place(x=295, y=258)
+
+    daegeon = Label(mtk, text=state[9], bg=color[9], fg="white", font="15")
+    daegeon.place(x=230, y=254)
+
+    jeonbuk = Label(mtk, text=state[10], bg=color[10], fg="white", font="15")
+    jeonbuk.place(x=185, y=294)
+
+    gwangju = Label(mtk, text=state[11], bg=color[11], fg="white", font="15")
+    gwangju.place(x=135, y=324)
+
+    gyengnam = Label(mtk, text=state[12], bg=color[12], fg="white", font="15")
+    gyengnam.place(x=260, y=324)
+
+    ulsan = Label(mtk, text=state[13], bg=color[13], fg="white", font="15")
+    ulsan.place(x=352, y=298)
+
+    busan = Label(mtk, text=state[14], bg=color[14], fg="white", font="15")
+    busan.place(x=322, y=358)
+
+    jeonnam = Label(mtk, text=state[15], bg=color[15], fg="white", font="15")
+    jeonnam.place(x=175, y=380)
+
+    jeju = Label(mtk, text=state[16], bg=color[16], fg="white", font="15")
+    jeju.place(x=85, y=425)
+
+    mtk.mainloop()
 
 
 
