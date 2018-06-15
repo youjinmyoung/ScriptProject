@@ -345,7 +345,7 @@ def InitMapButton():
 def MapButtonAction():
     global mtk
     mtk = Toplevel(gui)
-    mtk.geometry("500x600")
+    mtk.geometry("520x600")
     TempFont = font.Font(mtk, size=20, weight='bold', family='Consolas')
     TopText = Label(mtk, font=TempFont, text="[지역별 미세먼지 정보]",bg="white")
     TopText.place(x=60)
@@ -440,14 +440,24 @@ def MapButtonAction():
     jeju = Label(mtk, text=state[16], bg=color[16], fg="white", font="15")
     jeju.place(x=85, y=425)
 
-    blue = Label(mtk, text="            ", bg="blue",font="5")
+    blue = Label(mtk, text="                ", bg="blue",font="5")
     blue.place(x=0, y=510)
-    green = Label(mtk, text="            ", bg="green",font="5")
-    green.place(x=100, y=510)
-    orange = Label(mtk, text="            ", bg="green", font="5")
-    orange.place(x=200, y=510)
-    red = Label(mtk, text="            ", bg="green", font="5")
-    red.place(x=300, y=510)
+    green = Label(mtk, text="                ", bg="green",font="5")
+    green.place(x=125, y=510)
+    orange = Label(mtk, text="                ", bg="orange", font="5")
+    orange.place(x=248, y=510)
+    red = Label(mtk, text="                ", bg="red", font="5")
+    red.place(x=372, y=510)
+
+    good = Label(mtk, text="좋음0    ~30", bg="white",fg="blue", font="12")
+    good.place(x=0, y=535)
+    normal = Label(mtk, text="보통     ~80", bg="white",fg="green", font="12")
+    normal.place(x=125, y=535)
+    bad = Label(mtk, text="나쁨    ~150", bg="white",fg="orange", font="12")
+    bad.place(x=248, y=535)
+    craze = Label(mtk, text="매우나쁨151~", bg="white",fg="red", font="12")
+    craze.place(x=372, y=535)
+
 
     mtk.mainloop()
 
