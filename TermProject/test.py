@@ -14,24 +14,30 @@ import ex
 
 gui = Tk()
 gui.geometry("570x600+750+100")
+photo = PhotoImage(file="cloud.gif")
+imageLabel = Label(gui, image=photo)
+imageLabel.pack()
 
 def InitTopText():
     TempFont = font.Font(gui, size=20, weight='bold', family='Consolas')
-    MainText = Label(gui, font=TempFont, text="[실시간 대기상태 검색 App]")
+    MainText = Label(gui, font=TempFont, text="[실시간 대기상태 검색 App]",bg="white")
     MainText.place(x = 60)
 
 def InitDetailPlaceButton():
     TempFont = font.Font(gui, size=12, weight='bold', family='Consolas')
-    P_Button = Button(gui, font=TempFont, text="시도별 상세 지역 검색", command=DetailPlaceButtonAction, width=20, height=5)
+    P_Button = Button(gui, font=TempFont, text="시도별 상세 지역 검색", command=DetailPlaceButtonAction, width=20, height=2, bg="white")
     P_Button.pack()
-    P_Button.place(x=20, y=120)
+    P_Button.place(x=170, y=120)
 
 def DetailPlaceButtonAction():
     global ptk
-    ptk = Tk()
+    ptk = Toplevel(gui)
     ptk.geometry("570x900")
+    photo = PhotoImage(file="cloud.gif")
+    imageLabel = Label(ptk, image=photo)
+    imageLabel.pack()
     TempFont = font.Font(ptk, size=20, weight='bold', family='Consolas')
-    TopText = Label(ptk, font=TempFont, text="[시도별 상세 지역 검색]")
+    TopText = Label(ptk, font=TempFont, text="[시도별 상세 지역 검색]",bg="white")
     TopText.place(x=80)
     InitSearchListBox()
     InitInputLabel()
@@ -40,7 +46,7 @@ def DetailPlaceButtonAction():
     InitRenderText()
     InitListRenderText()
     EmailAddress()
-
+    ptk.mainloop()
 
 def InitSearchListBox():
     global CityList
@@ -51,14 +57,14 @@ def InitSearchListBox():
     CityList.place(x=180,y=75)
     CityList.current(0)
     TempFont = font.Font(ptk, size=15, weight='bold', family='Consolas')
-    CityText = Label(ptk, text = '도시 선택', font=TempFont)
+    CityText = Label(ptk, text = '도시 선택', font=TempFont,bg="white")
     CityText.pack()
     CityText.place(x=40,y=70)
 
 def InitInputLabel():
     global InputLabel
     SearchFont = font.Font(ptk, size=15, weight='bold', family='Consolas')
-    PlaceText = Label(ptk, font=SearchFont, text='지역 이름')
+    PlaceText = Label(ptk, font=SearchFont, text='지역 이름',bg="white")
     PlaceText.place(x=40, y=450)
     TempFont = font.Font(ptk, size=15, weight='bold', family = 'Consolas')
     InputLabel = Entry(ptk, font = TempFont, width = 12, borderwidth = 12, relief = 'ridge')
@@ -66,12 +72,12 @@ def InitInputLabel():
 
 def InitSearchButton():
     TempFont = font.Font(ptk, size=12, weight='bold', family = 'Consolas')
-    SearchButton = Button(ptk, font = TempFont, text="검색",  command=SearchButtonAction)
+    SearchButton = Button(ptk, font = TempFont, text="검색",  command=SearchButtonAction,bg="white")
     SearchButton.place(x=390, y=450)
 
 def InitListSearchButton():
     TempFont = font.Font(ptk, size=12, weight='bold', family = 'Consolas')
-    SearchButton = Button(ptk, font = TempFont, text="검색",  command=ListSearchButtonAction)
+    SearchButton = Button(ptk, font = TempFont, text="검색",  command=ListSearchButtonAction,bg="white")
     SearchButton.place(x=390, y=80)
 
 def SearchButtonAction():
@@ -167,9 +173,9 @@ def ShowList():
 
 def InitAllPlaceButton():
     TempFont = font.Font(gui, size=12, weight='bold', family='Consolas')
-    P_Button = Button(gui, font=TempFont, text="시도별 전체 지역 검색", command=AllPlaceButtonAction, width=20, height=5)
+    P_Button = Button(gui, font=TempFont, text="시도별 전체 지역 검색", command=AllPlaceButtonAction, width=20, height=2,bg="white")
     P_Button.pack()
-    P_Button.place(x=250, y=120)
+    P_Button.place(x=170, y=250)
 
 def InitAllSearchListBox():
     global CityList
@@ -177,17 +183,17 @@ def InitAllSearchListBox():
     CityList['value'] = ('서울', '부산', '대구', '인천', '광주', '대전', '울산', '경기',
                          '강원', '충북', '충남', '전북', '전남', '경북', '경남', '제주', '세종')
     CityList.pack()
-    CityList.place(x=180,y=75)
+    CityList.place(x=180,y=115)
     CityList.current(0)
     TempFont = font.Font(atk, size=15, weight='bold', family='Consolas')
-    CityText = Label(atk, text = '도시 선택', font=TempFont)
+    CityText = Label(atk, text = '도시 선택', font=TempFont,bg="white")
     CityText.pack()
-    CityText.place(x=40,y=70)
+    CityText.place(x=40,y=110)
 
 def InitAllSearchButton():
     TempFont = font.Font(atk, size=12, weight='bold', family = 'Consolas')
-    SearchButton = Button(atk, font = TempFont, text="검색",  command=AllSearchButtonAction)
-    SearchButton.place(x=390, y=70)
+    SearchButton = Button(atk, font = TempFont, text="검색",  command=AllSearchButtonAction,bg="white")
+    SearchButton.place(x=390, y=110)
 
 def AllSearchButtonAction():
     AllRenderText.configure(state='normal')
@@ -203,8 +209,6 @@ def AllSearchPlace():
     url = 'http://openapi.airkorea.or.kr/openapi/services/rest/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey' + key + trans_place + '&ver=1.3'
     data = urllib.request.urlopen(url).read()
     root = ElementTree.fromstring(data)
-
-
 
     for child in root.iter('item'):
         p_name = child.find('stationName').text
@@ -240,16 +244,20 @@ def InitAllRenderText():
 
 def AllPlaceButtonAction():
     global atk
-    atk = Tk()
+    atk = Toplevel(gui)
     atk.geometry("650x700")
+    photo = PhotoImage(file="cloud.gif")
+    imageLabel = Label(atk, image=photo)
+    imageLabel.pack()
     TempFont = font.Font(atk, size=20, weight='bold', family='Consolas')
-    TopText = Label(atk, font=TempFont, text="[시도별 전체 지역 검색]")
+    TopText = Label(atk, font=TempFont, text="[시도별 전체 지역 검색]",bg="white")
     TopText.place(x=60)
 
     InitAllSearchListBox()
     InitAllSearchButton()
     InitAllRenderText()
     EmailAddress2()
+    atk.mainloop()
 
 def SendEmail():
     text = RenderText.get("1.0", END)
@@ -280,13 +288,13 @@ def SendEmail():
 def EmailAddress():
     global emailaddress
     addressfont = font.Font(ptk, size=10, weight='bold', family='Consolas')
-    PlaceText = Label(ptk, font=addressfont, text='보낼 이메일 주소')
+    PlaceText = Label(ptk, font=addressfont, text='보낼 이메일 주소',bg="white")
     PlaceText.place(x=40, y=820)
     TempFont = font.Font(ptk, size=13, weight='bold', family = 'Consolas')
     emailaddress = Entry(ptk, font = TempFont, width = 20, borderwidth = 12, relief = 'ridge')
     emailaddress.place(x=200, y=800)
     TempFont = font.Font(ptk, size=11, weight='bold', family='Consolas')
-    SendButton = Button(ptk, font=TempFont, text="보내기", command=SendEmail)
+    SendButton = Button(ptk, font=TempFont, text="보내기", command=SendEmail,bg="yellow")
     SendButton.place(x=480, y=810)
 
 def AllSendEmail():
@@ -318,28 +326,28 @@ def AllSendEmail():
 def EmailAddress2():
     global emailaddress2
     addressfont = font.Font(atk, size=10, weight='bold', family='Consolas')
-    PlaceText = Label(atk, font=addressfont, text='보낼 이메일 주소')
+    PlaceText = Label(atk, font=addressfont, text='보낼 이메일 주소',bg="white")
     PlaceText.place(x=40, y=620)
     TempFont = font.Font(atk, size=13, weight='bold', family = 'Consolas')
     emailaddress2 = Entry(atk, font = TempFont, width = 20, borderwidth = 12, relief = 'ridge')
     emailaddress2.place(x=200, y=600)
     TempFont = font.Font(atk, size=11, weight='bold', family='Consolas')
-    SendButton = Button(atk, font=TempFont, text="보내기", command=AllSendEmail)
+    SendButton = Button(atk, font=TempFont, text="보내기", command=AllSendEmail,bg="yellow")
     SendButton.place(x=480, y=610)
 
 #지도
 def InitMapButton():
     TempFont = font.Font(gui, size=12, weight='bold', family='Consolas')
-    M_Button = Button(gui, font=TempFont, text="지도", command=MapButtonAction, width=20, height=5)
+    M_Button = Button(gui, font=TempFont, text="지역별 미세먼지 정보", command=MapButtonAction, width=20, height=2,bg="white")
     M_Button.pack()
-    M_Button.place(x=20, y=250)
+    M_Button.place(x=170, y=400)
 
 def MapButtonAction():
     global mtk
     mtk = Toplevel(gui)
-    mtk.geometry("500x500")
+    mtk.geometry("500x600")
     TempFont = font.Font(mtk, size=20, weight='bold', family='Consolas')
-    TopText = Label(mtk, font=TempFont, text="[지역별 대기오염 정보]")
+    TopText = Label(mtk, font=TempFont, text="[지역별 미세먼지 정보]",bg="white")
     TopText.place(x=60)
 
     photo = PhotoImage(file="map.gif")
@@ -380,8 +388,6 @@ def MapButtonAction():
         if pm10 > 150:
             state.append("매우나쁨")
             color.append("red")
-
-
 
     seoul = Label(mtk, text=state[0], bg=color[0], fg="white", font="15")
     seoul.place(x=165, y=110)
@@ -433,6 +439,15 @@ def MapButtonAction():
 
     jeju = Label(mtk, text=state[16], bg=color[16], fg="white", font="15")
     jeju.place(x=85, y=425)
+
+    blue = Label(mtk, text="            ", bg="blue",font="5")
+    blue.place(x=0, y=510)
+    green = Label(mtk, text="            ", bg="green",font="5")
+    green.place(x=100, y=510)
+    orange = Label(mtk, text="            ", bg="green", font="5")
+    orange.place(x=200, y=510)
+    red = Label(mtk, text="            ", bg="green", font="5")
+    red.place(x=300, y=510)
 
     mtk.mainloop()
 
